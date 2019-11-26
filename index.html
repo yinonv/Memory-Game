@@ -7,6 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Memory Game</title>
     <link rel="icon" type="image/png" href="./img/nba_icon.png">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="./css/memory-game.css">
 </head>
 
@@ -15,34 +17,60 @@
         <div id="header">
             <div class="empty-space"></div>
             <div class="start">
-                <button class="start-button">Start</button>
+                <button id="start-button">Start</button>
             </div>
             <div id="wrong-answers">Wrong guesses: 0</div>
         </div>
         <div id="card-container">
-            <div class="row card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-            </div>
-            <div class="row card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-            </div>
-            <div class="row card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
-            </div>
-            <div class="row card-row">
-                <div class="card"></div>
-                <div class="card"></div>
-                <div class="card"></div>
+        </div>
+        <div id="win-text-top"></div>
+        <div id="win-text-bottom"></div>
+        <img id="win" src="./img/trophy.gif">
+        <div class="img-container"><img src="./img/mute.png" id="mute"></div>
+    </div>
+    <div class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <div class="modal-title">
+                        <h4 class="modal-title-text">Select Level</h4>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body levels d-flex">
+                    <div name="rookie" class="level">Rookie</div>
+                    <div name="advanced" class="level">Advanced</div>
+                    <div name="pro" class="level">Pro</div>
+                </div>
+                <div class="modal-footer">
+                    <div class="go-button-container">
+                        <button type="button" class="btn btn-primary">Let's Go!</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">mute</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 
+    <audio id="player">
+        <source src="./music/nba_nbc_theme.mp3" type="audio/mp3">
+    </audio>
+    <audio id="match-music">
+        <source src="./music/nba_correct_sound.mp3" type="audio/mp3">
+    </audio>
+
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
     <script src="./js/memory-game.js"></script>
 </body>
 
