@@ -17,7 +17,7 @@
         <div id="header">
             <div class="empty-space"></div>
             <div class="start">
-                <button id="start-button">Start</button>
+                <button class="btn btn-danger" id="start-button">Start</button>
             </div>
             <div id="wrong-answers">Wrong guesses: 0</div>
         </div>
@@ -25,8 +25,15 @@
         </div>
         <div id="win-text-top"></div>
         <div id="win-text-bottom"></div>
+        <div id="high-score-text"></div>
+        <div class="high-score-rookie high-score"></div>
+        <div class="high-score-advanced high-score"></div>
+        <div class="high-score-pro high-score"></div>
+        <div id="save-text"></div>
+        <input type="text" id="input-name">
+        <button class="btn btn-success" id="save-button">Save</button>
         <img id="win" src="./img/trophy.gif">
-        <div class="img-container"><img src="./img/mute.png" id="mute"></div>
+        <div class="img-container"></div>
     </div>
     <div class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
