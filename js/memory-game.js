@@ -1,6 +1,4 @@
 let MemoryGame = {};
-MemoryGame.highScoreName = "Yinon Vahab"
-MemoryGame.highScore = 0;
 MemoryGame.numberOfCards = 12;
 MemoryGame.wrongCounter = 0;
 MemoryGame.cards = document.getElementsByClassName('card');
@@ -242,6 +240,7 @@ inputScore = () => {
     let highScore = parseInt(localStorage.getItem(`${MemoryGame.level}HighScore`));
     if (MemoryGame.wrongCounter < highScore) {
         localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
+        localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
     }
 }
 setStorage = () => {
