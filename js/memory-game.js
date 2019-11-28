@@ -235,7 +235,7 @@ start = () => {
     MemoryGame.highScoreText.innerText = `High Scores`;
     MemoryGame.scoreTable = document.getElementById('score-container');
     MemoryGame.highScoreNamesText = document.getElementsByClassName('high-score');
-    if(localStorage.length == 0){
+    if (localStorage.length == 0) {
         setStorage();
     }
     createModal();
@@ -256,7 +256,8 @@ inputScore = () => {
             localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
             localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
         }
-        closeModal();
+        MemoryGame.saveQuestion.innerText = "Your score has been saved!"
+        MemoryGame.saveButton.disabled = "true"
     }
 }
 setStorage = () => {

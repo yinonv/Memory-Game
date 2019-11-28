@@ -168,7 +168,7 @@
 }
 @media screen and (max-width: 576px){
     .img-container{
-        height: 24vh;
+        height: 0;
     }
     .card-container{
         width: 100vw;
@@ -182,7 +182,8 @@
         text-align: center;
     }
     .card{
-        width: 30%;
+        width: 31%;
+        height: 47%;
     }
     #wrong-answers{
         font-size: 18px;
