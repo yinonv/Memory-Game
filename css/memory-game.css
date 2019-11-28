@@ -65,41 +65,11 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    width: 95vw;
+    width: 70vw;
     height: 75vh;
 }
 #start-button{
     font-size: 20px;
-}
-@media screen and (max-width: 576px){
-    .card-container{
-        width: 100vw;
-    }
-    .card-row{
-        width: 100%;
-    }
-    #header{
-        height: 5vh;
-    }
-    .card{
-        width: 30%;
-    }
-    #wrong-answers{
-        font-size: 18px;
-        width: 33%;
-        transform: translateX(-18%);
-    }
-    .start{
-        transform: translateX(-10%);
-    }
-    #start-button{
-        padding: 5px 15px;
-        font-size: 17px;
-        transform: translateX(8%);
-    }
-    #win{
-        height: 150px;
-    }
 }
 .levels{
     justify-content: space-around;
@@ -119,6 +89,7 @@
 }
 .level{
     font-size: 18px;
+    font-weight: 550;
 }
 #mute{
     height: 50px;
@@ -193,4 +164,37 @@
 .row-score1{
     padding: 15px;
     border: 3px solid white;
+}
+@media screen and (max-width: 576px){
+    .img-container{
+        height: 24vh;
+    }
+    .card-container{
+        width: 100vw;
+    }
+    .card-row{
+        width: 100%;
+    }
+    #header{
+        height: 5vh;
+    }
+    .card{
+        width: 30%;
+    }
+    #wrong-answers{
+        font-size: 18px;
+        width: 33%;
+        transform: translateX(-18%);
+    }
+    .start{
+        transform: translateX(-10%);
+    }
+    #start-button{
+        padding: 5px 15px;
+        font-size: 17px;
+        transform: translateX(8%);
+    }
+    #win{
+        height: 150px;
+    }
 }
