@@ -185,6 +185,8 @@
         font-size: 18px;
         width: 33%;
         transform: translateX(-18%);
+        margin-right: 15px;
+        margin-left: 30px;
     }
     .start{
         transform: translateX(-10%);
