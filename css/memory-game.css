@@ -120,6 +120,7 @@
 #win-text-bottom{
     font-size: 30px;
     color: white;
+    text-align: center;
 }
 #high-score-text {
     color: white;

@@ -51,6 +51,7 @@ checkMatch = (e) => {
                 e.target.classList.add('correct');
                 MemoryGame.cards[i].classList.add('correct');
                 if (userWon()) {
+                    MemoryGame.saveButton.disabled = false;
                     MemoryGame.wrong.innerText = "";
                     MemoryGame.inputName.style.display = "block";
                     MemoryGame.saveButton.style.display = "block";
@@ -60,6 +61,7 @@ checkMatch = (e) => {
                     MemoryGame.winTextTop.innerText = 'You Won!';
                     MemoryGame.startButton.innerText = "New Game"
                     MemoryGame.startButton.style.cssText = "transform: translateX(-12%);"
+                    MemoryGame.cardContainer.style.display = "none";
                     MemoryGame.winTextBottom.innerText = `you had ${MemoryGame.wrongCounter} wrong guesses!`;
                     MemoryGame.numberOfCards = 0;
                     deleteCards();
@@ -192,6 +194,7 @@ clearGame = () => {
     MemoryGame.scoreTable.style.display = "none";
 }
 beginGame = () => {
+    MemoryGame.cardContainer.style.display = "flex";
     MemoryGame.modal.style.display = 'none';
     MemoryGame.wrong.innerText = `Wrong guesses: ${MemoryGame.wrongCounter}`;
     MemoryGame.wrong.style.visibility = 'visible';
