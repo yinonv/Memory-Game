@@ -122,7 +122,7 @@ createCards = () => {
     let rows = 0;
     let cols = 0;
     switch (MemoryGame.numberOfCards) {
-        case 12: rows = 3; cols = 4;
+        case 12: rows = 4; cols = 3;
             break;
         case 18: rows = 3; cols = 6;
             break;
@@ -169,7 +169,9 @@ enterModal = () => {
     MemoryGame.highScoreText.innerText = "";
 }
 closeModal = () => {
+    clearGame();
     setHighScores();
+    MemoryGame.scoreTable.style.display = "flex";
     MemoryGame.modal.style.display = 'none';
     MemoryGame.startButton.innerText = "Start";
 }
@@ -181,15 +183,12 @@ clearGame = () => {
     MemoryGame.winTextTop.innerText = "";
     MemoryGame.winGif.style.display = "none";
     MemoryGame.modal.style.display = 'block';
-    MemoryGame.highScoreText.innerText = "High Scores";
     MemoryGame.inputName.style.display = "none";
+    MemoryGame.inputName.value = "";
     MemoryGame.saveButton.style.display = "none";
     MemoryGame.saveQuestion.innerText = "";
     MemoryGame.startButton.style.cssText = "transform: translateX(8%);"
-    MemoryGame.modal.style.display = 'block';
-    for (let i = 0; i < MemoryGame.highScoreNamesText.length; i++) {
-        MemoryGame.highScoreNamesText[i].innerText = "";
-    }
+    MemoryGame.scoreTable.style.display = "none";
 }
 beginGame = () => {
     MemoryGame.modal.style.display = 'none';
@@ -216,6 +215,7 @@ createModal = () => {
     MemoryGame.beginGameButton.addEventListener('click', beginGame)
 }
 deleteCards = () => {
+    document.querySelectorAll('.card-row').forEach(row => row.remove());
     document.querySelectorAll('.card').forEach(card => card.remove());
 }
 start = () => {
@@ -229,18 +229,27 @@ start = () => {
     MemoryGame.winTextBottom = document.getElementById('win-text-bottom');
     MemoryGame.highScoreText = document.getElementById('high-score-text');
     MemoryGame.highScoreText.innerText = `High Scores`;
+    MemoryGame.scoreTable = document.getElementById('score-container');
     MemoryGame.highScoreNamesText = document.getElementsByClassName('high-score');
-    setHighScores();
     createModal();
+    createScoreTable();
+    setHighScores();
 }
 inputScore = () => {
     let scoreObj = JSON.parse(localStorage.getItem(MemoryGame.level));
-    scoreObj[MemoryGame.inputName.value] = MemoryGame.wrongCounter;
-    localStorage.setItem(MemoryGame.level, JSON.stringify(scoreObj));
-    let highScore = parseInt(localStorage.getItem(`${MemoryGame.level}HighScore`));
-    if (MemoryGame.wrongCounter < highScore) {
-        localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
-        localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
+    if (MemoryGame.wrongCounter > scoreObj[MemoryGame.inputName.value]) {
+        MemoryGame.saveQuestion.innerText = "You have a better score already!"
+        MemoryGame.saveButton.disabled = "true"
+    }
+    else {
+        scoreObj[MemoryGame.inputName.value] = MemoryGame.wrongCounter;
+        localStorage.setItem(MemoryGame.level, JSON.stringify(scoreObj));
+        let highScore = parseInt(localStorage.getItem(`${MemoryGame.level}HighScore`));
+        if (MemoryGame.wrongCounter < highScore) {
+            localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
+            localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
+        }
+        closeModal();
     }
 }
 setStorage = () => {
@@ -256,16 +265,37 @@ setStorage = () => {
     localStorage.setItem("proHighScoreName", "Yinon Vahab");
 }
 setHighScores = () => {
-    let levels = ["rookie", "advanced", "pro"];
-    let rookieScore = localStorage.getItem("rookieHighScore")
-    let rookieName = localStorage.getItem("rookieHighScoreName");
-    let advancedScore = localStorage.getItem("advancedHighScore")
-    let advancedName = localStorage.getItem("advancedHighScoreName");
-    let proScore = localStorage.getItem("proHighScore")
-    let proName = localStorage.getItem("proHighScoreName");
-    MemoryGame.highScoreNamesText[0].innerText = `${levels[0]}: ${rookieName} - ${rookieScore} wrong guesses`;
-    MemoryGame.highScoreNamesText[1].innerText = `${levels[1]}: ${advancedName} - ${advancedScore} wrong guesses`;
-    MemoryGame.highScoreNamesText[2].innerText = `${levels[2]}: ${proName} - ${proScore} wrong guesses`;
+    MemoryGame.highScoreText = "High Scores";
+    MemoryGame.cols[4].innerText = localStorage.getItem("rookieHighScoreName");
+    MemoryGame.cols[5].innerText = localStorage.getItem("rookieHighScore");
+    MemoryGame.cols[7].innerText = localStorage.getItem("advancedHighScoreName");
+    MemoryGame.cols[8].innerText = localStorage.getItem("advancedHighScore");
+    MemoryGame.cols[10].innerText = localStorage.getItem("proHighScoreName");
+    MemoryGame.cols[11].innerText = localStorage.getItem("proHighScore");
+}
+createScoreTable = () => {
+    let table = document.getElementById('table-score');
+    for (let i = 0; i < 4; i++) {
+        let newRow = document.createElement('tr');
+        if (i == 0) {
+            newRow.classList.add('row-score1');
+        } else {
+            newRow.classList.add('row-score');
+        }
+        for (let j = 0; j < 3; j++) {
+            let newCol = document.createElement('td');
+            newCol.classList.add('col-score');
+            newRow.append(newCol);
+        }
+        table.append(newRow);
+    }
+    MemoryGame.cols = document.getElementsByClassName('col-score');
+    MemoryGame.cols[0].innerText = "Level";
+    MemoryGame.cols[1].innerText = "Name";
+    MemoryGame.cols[2].innerText = "Score";
+    MemoryGame.cols[3].innerText = "Rookie";
+    MemoryGame.cols[6].innerText = "Advanced";
+    MemoryGame.cols[9].innerText = "Pro";
 }
 start();
 

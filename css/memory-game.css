@@ -17,16 +17,18 @@
     justify-content: flex-end;
     align-items: center;
     width: 100vw;
+    height: 20vh;
     margin-top: 3%;
     margin-bottom: 20px;
 }
 .card{
-    height: calc(100vh / 6);
-    width: calc(100vw / 7);
+    height: 100%;
+    width: 15%;
+    margin-left: 5px;
     border: 1px solid black;
-    margin-bottom: 10px;
     background-repeat: no-repeat;
     background-position: center;
+    margin-bottom: 10px;
     background-size: contain;
     cursor: pointer;
     transition: transform .6s;
@@ -41,7 +43,9 @@
     justify-content: space-around;
     display: flex;
     align-items: center;
-    width: 90vw;
+    height: 80%;
+    width: 80%;
+    margin-top: 10px;
 }
 #wrong-answers{
     color: white;
@@ -54,23 +58,31 @@
 }
 .start{
     width: 33%;
-    margin-left: 20%;
+    margin-left: 22%;
 }
-.card-container{
+#card-container{
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
+    align-items: center;
+    width: 95vw;
+    height: 75vh;
 }
 #start-button{
     font-size: 20px;
 }
 @media screen and (max-width: 576px){
-    .card{
-        height: calc(100vh / 5.5);
-        width: calc(100vw / 6.3);
+    .card-container{
+        width: 100vw;
     }
     .card-row{
-        width: 100vw;
+        width: 100%;
+    }
+    #header{
+        height: 5vh;
+    }
+    .card{
+        width: 30%;
     }
     #wrong-answers{
         font-size: 18px;
@@ -78,17 +90,12 @@
         transform: translateX(-18%);
     }
     .start{
-        width: 33%;
-        margin-left: 8%;
-        margin-right: 20px;
+        transform: translateX(-10%);
     }
     #start-button{
         padding: 5px 15px;
         font-size: 17px;
         transform: translateX(8%);
-    }
-    #header{
-        margin-top: 25px;
     }
     #win{
         height: 150px;
@@ -123,7 +130,7 @@
     align-items: flex-end;
     display: flex;
     width: 100vw;
-    height: 100%;
+    height: 5vh;
 }
 .go-button-container{
     display: flex;
@@ -146,10 +153,7 @@
 #high-score-text {
     color: white;
     font-size: 27px;
-}
-.high-score{ 
-    color: white;
-    font-size: 22px;
+    margin-bottom: 10px;
 }
 #input-name{
     display: none;
@@ -163,4 +167,30 @@
     margin-top: 20px;
     color: white;
     font-size: 20px;
+}
+#score-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+#table-score{
+    background: rgba(150, 19, 19, 0.8);
+    text-align: center;
+    color: white;
+    border: 3px solid white;
+    font-size: 18px;
+    font-weight: 600;
+}
+.row-score{
+    border: 1px solid white;
+    padding: 10px;
+}
+.col-score{
+    border: 1px solid white;
+    padding: 10px;
+}
+.row-score1{
+    padding: 15px;
+    border: 3px solid white;
 }
