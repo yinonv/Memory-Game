@@ -177,6 +177,8 @@
     }
     #header{
         height: 5vh;
+        margin-top: 10%;
+        text-align: center;
     }
     .card{
         width: 30%;
