@@ -39,6 +39,18 @@
     background-size: cover;
     transform: rotateY(180deg);
 }
+.dog-card-background {
+    background-image: url(../img/dog_card.png) !important;
+    background-size: cover;
+    transform: rotateY(180deg);
+}
+.dog-image-card{
+    background-size: cover;
+}
+.loader{
+    background-size: contain;
+    background-image: url(../img/loader.gif);
+}
 .card-row{
     justify-content: space-around;
     display: flex;
@@ -203,4 +215,7 @@
     #win{
         height: 150px;
     }
+}
+#theme-button{
+    margin-left: 10px;
 }

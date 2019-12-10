@@ -41,8 +41,8 @@ checkMatch = (e) => {
         if (MemoryGame.cards[i].classList.contains('selected') && i != e.target.index) {
             removeSelections()
             if (e.target.style.backgroundImage != MemoryGame.cards[i].style.backgroundImage) {
-                e.target.classList.add('card-background');
-                MemoryGame.cards[i].classList.add('card-background');
+                e.target.classList.add(MemoryGame.cardBackgroundClass);
+                MemoryGame.cards[i].classList.add(MemoryGame.cardBackgroundClass);
                 MemoryGame.wrong.innerText = `Wrong guesses: ${++MemoryGame.wrongCounter}`;
             } else {
                 if (!MemoryGame.startMusic.paused) {
@@ -74,33 +74,68 @@ handleSelection = (e) => {
     if (!e.target.classList.contains('correct')) {
         let selected = selectedCards();
         if (selected == 1) {
-            e.target.style.cssText = `background-image: url(./img/${e.target.num}.png);`;
-            e.target.classList.remove('card-background');
+            e.target.style.cssText = `background-image: url(${e.target.url});`;
+            e.target.classList.remove(MemoryGame.cardBackgroundClass);
             e.target.classList.add('selected');
+            let time = 1200;
+            if(MemoryGame.theme == 'dog'){
+                time = 1600;
+            }
             setTimeout(() => {
                 checkMatch(e);
-            }, 700);
+            }, time);
         } else if (selected == 0) {
-            e.target.classList.remove('card-background');
-            e.target.style.cssText = `background-image: url(./img/${e.target.num}.png);`;
+            e.target.classList.remove(MemoryGame.cardBackgroundClass);
+            e.target.style.cssText = `background-image: url(${e.target.url});`;
             e.target.classList.add('selected');
         }
     }
+}
+async function getDogImage() {
+    try {
+        const response = await $.ajax({
+            method: "GET",
+            url: "https://dog.ceo/api/breeds/image/random",
+            dataType: "JSON",
+        });
+        return response.message;
+    } catch {
+        alert("The dog theme isn't responding, please change theme");
+    }
+}
+async function promises() {
+    let images = [];
+    for (let i = 0; i < MemoryGame.numberOfCards / 2; i++) {
+        images[i] = getDogImage();
+    }
+    let allImages = Promise.all(images)
+    let img = await Promise.resolve(allImages);
+    return img;
 }
 getImages = () => {
     let cardImages = new Array(MemoryGame.numberOfCards / 2);
     let imageIndex = 0;
-    while (cardImages.includes(undefined)) {
-        let num = Math.floor(Math.random() * 30);
-        if (!cardImages.includes(num)) {
-            cardImages[imageIndex] = num;
-            imageIndex++;
+    if (MemoryGame.theme == "nba") {
+        while (cardImages.includes(undefined)) {
+            let num = Math.floor(Math.random() * 30);
+            if (!cardImages.includes(num)) {
+                cardImages[imageIndex] = num;
+                imageIndex++;
+            }
         }
+        randomCards(cardImages);
+    } else {
+        let dogImages = [];
+        let cardImages = promises();
+        cardImages.then(results => {
+            results.forEach(res => dogImages.push(res));
+            removeLoader();
+            randomCards(dogImages);
+        });
     }
-    return cardImages;
 }
-randomCards = () => {
-    let cardImages = getImages();
+
+randomCards = (cardImages) => {
     let cardNum = new Array(MemoryGame.numberOfCards / 2).fill(0);
     let cardsOnBoard = 0;
     let i = 0;
@@ -111,9 +146,13 @@ randomCards = () => {
             randNum = Math.floor(Math.random() * (MemoryGame.numberOfCards / 2));
         }
         num = cardImages[randNum];
-        MemoryGame.cards[i].num = num;
+        if (MemoryGame.theme == "dog") {
+            MemoryGame.cards[i].url = num;
+        } else {
+            MemoryGame.cards[i].url = `./img/${num}.png`
+        }
         MemoryGame.cards[i].index = i;
-        MemoryGame.cards[i].classList.add('card-background');
+        MemoryGame.cards[i].classList.add(MemoryGame.cardBackgroundClass);
         MemoryGame.cards[i].addEventListener('click', handleSelection)
         i++;
         ++cardNum[randNum];
@@ -139,8 +178,17 @@ createCards = () => {
         for (let j = 0; j < cols; j++) {
             let divCard = document.createElement('div');
             divCard.classList.add('card');
+            if (MemoryGame.theme == 'dog') {
+                divCard.classList.add('dog-image-card');
+                divCard.classList.add('loader')
+            }
             rowCard.append(divCard);
         }
+    }
+}
+removeLoader = () => {
+    for (let i = 0; i < MemoryGame.cards.length; i++) {
+        MemoryGame.cards[i].classList.remove('loader');
     }
 }
 removeSelectedLevel = () => {
@@ -169,6 +217,7 @@ enterModal = () => {
         MemoryGame.sound = false;
     }
     MemoryGame.highScoreText.innerText = "";
+    MemoryGame.themeButton.style.display = "none";
 }
 closeModal = () => {
     clearGame();
@@ -176,6 +225,7 @@ closeModal = () => {
     MemoryGame.scoreTable.style.display = "flex";
     MemoryGame.modal.style.display = 'none';
     MemoryGame.startButton.innerText = "Start";
+    MemoryGame.themeButton.style.display = "block";
 }
 clearGame = () => {
     MemoryGame.saveButton.disabled = "false";
@@ -202,7 +252,7 @@ beginGame = () => {
         createMuteImage();
     }
     createCards();
-    randomCards();
+    getImages();
 }
 createModal = () => {
     MemoryGame.modal = document.getElementsByClassName('modal')[0];
@@ -223,11 +273,14 @@ deleteCards = () => {
     document.querySelectorAll('.card').forEach(card => card.remove());
 }
 start = () => {
+    MemoryGame.body = document.getElementById('body');
     MemoryGame.startButton = document.getElementById('start-button');
     MemoryGame.winGif = document.getElementById('win');
     MemoryGame.winTextTop = document.getElementById('win-text-top');
     MemoryGame.inputName = document.getElementById('input-name');
     MemoryGame.saveButton = document.getElementById('save-button');
+    MemoryGame.themeButton = document.getElementById('theme-button');
+    MemoryGame.themeButton.addEventListener('click', changeTheme);
     MemoryGame.saveButton.addEventListener('click', inputScore);
     MemoryGame.saveQuestion = document.getElementById('save-text');
     MemoryGame.winTextBottom = document.getElementById('win-text-bottom');
@@ -235,6 +288,8 @@ start = () => {
     MemoryGame.highScoreText.innerText = `High Scores`;
     MemoryGame.scoreTable = document.getElementById('score-container');
     MemoryGame.highScoreNamesText = document.getElementsByClassName('high-score');
+    MemoryGame.cardBackgroundClass = "card-background";
+    MemoryGame.theme = "nba";
     if (localStorage.length == 0) {
         setStorage();
     }
@@ -304,6 +359,26 @@ createScoreTable = () => {
     MemoryGame.cols[3].innerText = "Rookie";
     MemoryGame.cols[6].innerText = "Advanced";
     MemoryGame.cols[9].innerText = "Pro";
+}
+changeTheme = () => {
+    let dog = {
+        class: "dog-card-background",
+        background: "url(./img/background_image_dog.jpg)",
+    }
+    let nba = {
+        class: "card-background",
+        background: "url(./img/background_image.jpg)",
+    }
+    if (MemoryGame.theme == "nba") {
+        MemoryGame.theme = "dog";
+        MemoryGame.cardBackgroundClass = dog.class;
+        MemoryGame.body.style.backgroundImage = dog.background;
+    } else {
+        MemoryGame.theme = "nba";
+        MemoryGame.cardBackgroundClass = nba.class;
+        MemoryGame.body.style.backgroundImage = nba.background;
+    }
+    enterModal();
 }
 start();
 
