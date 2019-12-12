@@ -78,7 +78,7 @@ handleSelection = (e) => {
             e.target.classList.remove(MemoryGame.cardBackgroundClass);
             e.target.classList.add('selected');
             let time = 1200;
-            if(MemoryGame.theme == 'dog'){
+            if (MemoryGame.theme == 'dog') {
                 time = 1600;
             }
             setTimeout(() => {
@@ -93,26 +93,21 @@ handleSelection = (e) => {
 }
 async function getDogImage() {
     try {
-        const response = await $.ajax({
-            method: "GET",
-            url: "https://dog.ceo/api/breeds/image/random",
-            dataType: "JSON",
-        });
-        return response.message;
+        const response = await fetch("https://dog.ceo/api/breeds/image/random");
+        const responseJson = await response.json();
+        return responseJson.message;
     } catch {
         alert("The dog theme isn't responding, please change theme");
     }
 }
-async function promises() {
+async function getAllDogImages() {
     let images = [];
     for (let i = 0; i < MemoryGame.numberOfCards / 2; i++) {
-        images[i] = getDogImage();
+        images[i] = await getDogImage();
     }
-    let allImages = Promise.all(images)
-    let img = await Promise.resolve(allImages);
-    return img;
+    return images;
 }
-getImages = () => {
+getImages = async () => {
     let cardImages = new Array(MemoryGame.numberOfCards / 2);
     let imageIndex = 0;
     if (MemoryGame.theme == "nba") {
@@ -123,16 +118,11 @@ getImages = () => {
                 imageIndex++;
             }
         }
-        randomCards(cardImages);
     } else {
-        let dogImages = [];
-        let cardImages = promises();
-        cardImages.then(results => {
-            results.forEach(res => dogImages.push(res));
-            removeLoader();
-            randomCards(dogImages);
-        });
+        cardImages = await getAllDogImages();
+        removeLoader();
     }
+    randomCards(cardImages);
 }
 
 randomCards = (cardImages) => {
