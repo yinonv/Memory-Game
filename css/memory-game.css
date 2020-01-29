@@ -150,6 +150,8 @@
 #save-text{
     margin-top: 20px;
     color: white;
+    background: #263654;
+    margin-bottom: 15px;
     font-size: 20px;
 }
 #score-container{
