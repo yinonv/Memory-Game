@@ -310,9 +310,9 @@ setStorage = () => {
     localStorage.setItem("rookie", JSON.stringify({}));
     localStorage.setItem("advanced", JSON.stringify({}));
     localStorage.setItem("pro", JSON.stringify({}));
-    localStorage.setItem("rookieHighScore", 50);
-    localStorage.setItem("advancedHighScore", 50);
-    localStorage.setItem("proHighScore", 50);
+    localStorage.setItem("rookieHighScore", '-');
+    localStorage.setItem("advancedHighScore", '-');
+    localStorage.setItem("proHighScore", '-');
     localStorage.setItem("rookieHighScoreName", "Yinon Vahab");
     localStorage.setItem("advancedHighScoreName", "Yinon Vahab");
     localStorage.setItem("proHighScoreName", "Yinon Vahab");
@@ -345,7 +345,7 @@ createScoreTable = () => {
     MemoryGame.cols = document.getElementsByClassName('col-score');
     MemoryGame.cols[0].innerText = "Level";
     MemoryGame.cols[1].innerText = "Name";
-    MemoryGame.cols[2].innerText = "Score";
+    MemoryGame.cols[2].innerText = "Wrong Answers";
     MemoryGame.cols[3].innerText = "Rookie";
     MemoryGame.cols[6].innerText = "Advanced";
     MemoryGame.cols[9].innerText = "Pro";
