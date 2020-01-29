@@ -103,9 +103,9 @@ async function getDogImage() {
 async function getAllDogImages() {
     let images = [];
     for (let i = 0; i < MemoryGame.numberOfCards / 2; i++) {
-        images[i] = await getDogImage();
+        images[i] = getDogImage();
     }
-    return images;
+    return await Promise.all(images)
 }
 getImages = async () => {
     let cardImages = new Array(MemoryGame.numberOfCards / 2);
