@@ -313,9 +313,9 @@ setStorage = () => {
     localStorage.setItem("rookieHighScore", '-');
     localStorage.setItem("advancedHighScore", '-');
     localStorage.setItem("proHighScore", '-');
-    localStorage.setItem("rookieHighScoreName", "Yinon Vahab");
-    localStorage.setItem("advancedHighScoreName", "Yinon Vahab");
-    localStorage.setItem("proHighScoreName", "Yinon Vahab");
+    localStorage.setItem("rookieHighScoreName", "-");
+    localStorage.setItem("advancedHighScoreName", "-");
+    localStorage.setItem("proHighScoreName", "-");
 }
 setHighScores = () => {
     MemoryGame.highScoreText = "High Scores";
