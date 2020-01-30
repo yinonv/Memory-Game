@@ -290,18 +290,15 @@
     }
     const inputScore = () => {
         let scoreObj = JSON.parse(localStorage.getItem(MemoryGame.level));
-        if (scoreObj != null && MemoryGame.wrongCounter > scoreObj[MemoryGame.inputName.value]) {
+        if (MemoryGame.wrongCounter > scoreObj[MemoryGame.inputName.value]) {
             MemoryGame.saveQuestion.innerText = "You have a better score already!"
             MemoryGame.saveButton.disabled = "true"
             return;
         }
-        if (scoreObj == null) {
-            scoreObj = {}
-        }
         scoreObj[MemoryGame.inputName.value] = MemoryGame.wrongCounter;
         localStorage.setItem(MemoryGame.level, JSON.stringify(scoreObj));
         let highScore = parseInt(localStorage.getItem(`${MemoryGame.level}HighScore`));
-        if (highScore == null || MemoryGame.wrongCounter < highScore) {
+        if (highScore == NaN || MemoryGame.wrongCounter < highScore) {
             localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
             localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
         }
