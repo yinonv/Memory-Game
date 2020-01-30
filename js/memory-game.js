@@ -297,8 +297,11 @@
         }
         scoreObj[MemoryGame.inputName.value] = MemoryGame.wrongCounter;
         localStorage.setItem(MemoryGame.level, JSON.stringify(scoreObj));
-        let highScore = parseInt(localStorage.getItem(`${MemoryGame.level}HighScore`));
-        if (highScore == NaN || MemoryGame.wrongCounter < highScore) {
+        let highScore = localStorage.getItem(`${MemoryGame.level}HighScore`);
+        if (highScore != "-") {
+            highScore = parseInt(highScore)
+        }
+        if (highScore == "-" || MemoryGame.wrongCounter < highScore) {
             localStorage.setItem(`${MemoryGame.level}HighScore`, MemoryGame.wrongCounter);
             localStorage.setItem(`${MemoryGame.level}HighScoreName`, MemoryGame.inputName.value);
         }
